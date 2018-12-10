@@ -14,6 +14,9 @@ configureClamd(){
 
   echo "Enabling listening on all interfaces..."
   sed -ri "s|#TCPAddr 127.0.0.1|TCPAddr 0.0.0.0|g" ${CLAMD_CONFIG}
+
+  echo "Switching to foreground"
+  sed -ri "s|#Foreground yes|Foreground yes|g" ${CLAMD_CONFIG}
 }
 
 configureFreshClam(){
@@ -57,15 +60,17 @@ runFreshClam(){
 }
 
 startClamAV(){
-  clamd
-  sleep 5
-  if [[ $(ps -ef | grep [c]lamd) ]] ; then
-    echo "Successfully started ClamAV Daemon"
-    tail -f /var/log/clamav/*
-  fi
+  clamd --foreground=true
+}
+
+enableCron(){
+  HOURS=$1
+  echo "Freshclam will update every ${HOURS} hours"
+  (crontab -l ; echo "0 */${HOURS} * * * /usr/bin/freshclam")| crontab -
 }
 
 configureClamd
 configureFreshClam
 freshclam
+enableCron 6
 startClamAV

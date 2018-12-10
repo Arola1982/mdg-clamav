@@ -11,8 +11,8 @@ RUN chown -R clamav:clamav /run/clamav
 
 RUN chmod 700 /etc/clamav/freshclam.conf
 
-COPY mdg-clamav.sh /mdg-clamav.sh
-RUN chmod +x /mdg-clamav.sh
+COPY startup.sh /startup.sh
+RUN chmod +x /startup.sh
 
 WORKDIR /
-CMD ./mdg-clamav.sh
+CMD ./startup.sh
