@@ -6,9 +6,6 @@ FRESHCLAM_CONFIG="/etc/clamav/freshclam.conf"
 configureClamd(){
   echo "Modifying clamd.conf"
 
-  echo "Disabling LocalSocket"
-  sed -ri "s|LocalSocket /run/clamav/clamd.sock|#LocalSocket /run/clamav/clamd.sock|g" ${CLAMD_CONFIG}
-
   echo "Enabling listening on port ${CLAMD_PORT}"
   sed -ri "s|#TCPSocket 3310|TCPSocket ${CLAMD_PORT}|g" ${CLAMD_CONFIG}
 
@@ -17,6 +14,9 @@ configureClamd(){
 
   echo "Switching to foreground"
   sed -ri "s|#Foreground yes|Foreground yes|g" ${CLAMD_CONFIG}
+ 
+  echo "Enabling configuration" 
+  sed -ri "s|Example|#Example|" ${CLAMD_CONFIG}
 }
 
 configureFreshClam(){
