@@ -51,7 +51,7 @@ configureFreshClam(){
 
   if [ -n "$PROXY_PASS" ] ; then
     echo "Proxy is using a password..."
-    sed -ri "s|#HTTPProxyPassword mypass|HTTPProxyPassword ${PROXY_PASS}}|g" ${FRESHCLAM_CONFIG}
+    sed -ri "s|#HTTPProxyPassword mypass|HTTPProxyPassword ${PROXY_PASS}|g" ${FRESHCLAM_CONFIG}
   fi
 }
 
