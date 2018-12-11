@@ -55,6 +55,16 @@ configureFreshClam(){
   fi
 }
 
+dummyDB(){
+  if [ -n "$LOCAL_DB_ZIP_URL" ] ; then
+    echo "Downloading local DB files to get ClamAV running initially..."
+    cd /var/lib/clamav
+    wget ${LOCAL_DB_ZIP_URL}
+    unzip *.zip
+    rm -f *.zip
+  fi
+}
+
 runFreshClam(){
   freshclam --quiet
 }
@@ -73,4 +83,5 @@ configureClamd
 configureFreshClam
 freshclam
 enableCron 6
+dummyDB
 startClamAV
