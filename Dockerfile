@@ -4,6 +4,7 @@ ARG VERSION=0.100.2-r0
 
 RUN apk update && \
   apk add bash \
+  telnet \
   clamav=${VERSION} \
   clamav-db=${VERSION}
 
