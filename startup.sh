@@ -3,6 +3,8 @@
 CLAMD_CONFIG="/etc/clamav/clamd.conf"
 FRESHCLAM_CONFIG="/etc/clamav/freshclam.conf"
 
+DB_FILES=(main.cvd daily.cvd bytecode.cvd)
+
 configureClamd(){
   echo "Modifying clamd.conf"
 
@@ -68,6 +70,16 @@ dummyDB(){
   fi
 }
 
+customURL(){
+  if [ -n "$CUSTOM_BASE_URL" ] ; then
+    echo "Setting DatabaseCustomURLs for ${CUSTOM_BASE_URL}"
+    for FILE in ${DB_FILES[*]}
+    do
+      echo "DatabaseCustomURL ${CUSTOM_BASE_URL}/${FILE}" >> ${FRESHCLAM_CONFIG}
+    done
+  fi
+}
+
 runFreshClam(){
   freshclam --quiet
 }
@@ -87,4 +99,5 @@ configureFreshClam
 freshclam
 enableCron 6
 dummyDB
+customURL
 startClamAV
