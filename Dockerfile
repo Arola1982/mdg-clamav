@@ -2,6 +2,8 @@ FROM alpine:latest
 
 ARG VERSION=0.100.2-r0
 
+ENV CLAMD_STREAM_MAX_LENGTH="10M"
+
 RUN apk update && \
   apk add bash \
   telnet \

@@ -17,6 +17,9 @@ configureClamd(){
  
   echo "Enabling configuration" 
   sed -ri "s|Example|#Example|" ${CLAMD_CONFIG}
+
+  echo "Set StreamMaxLength"
+  sed -i "s|#StreamMaxLength 10M|StreamMaxLength ${CLAMD_STREAM_MAX_LENGTH}|" ${CLAMD_CONFIG}
 }
 
 configureFreshClam(){
